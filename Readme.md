@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Виктор Пантелеев](https://up.htmlacademy.ru/javascript/25/user/1646641).
-* Наставник: `Неизвестно`.
+* Наставник: [Вадим Новаш](https://htmlacademy.ru/profile/stakeout).
 
 ---
 
