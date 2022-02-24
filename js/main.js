@@ -1,21 +1,31 @@
 const getRandomNumber = (minNumber, maxNumber) => {
-  if (minNumber >= 0 && minNumber <= maxNumber) {
-    return Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
+  minNumber = Math.abs(minNumber);
+  maxNumber = Math.abs(maxNumber);
+
+  if (minNumber > maxNumber) {
+    const swap = minNumber;
+    minNumber = maxNumber;
+    maxNumber = swap;
   }
 
-  return 'Минимальное значение меньше нуля или больше максимального!';
+  return Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
 };
 
-getRandomNumber(0, 10);
+getRandomNumber(1, 10);
 
 
-const getRandomValue = (minValue, maxValue, quantity) => {
-  if (maxValue >= minValue && minValue >= 0) {
-    const currentValue = Math.random() * (maxValue - minValue) + minValue;
-    return currentValue.toFixed(quantity);
+const getRandomFloat = (minNumber, maxNumber, quantity) => {
+  minNumber = Math.abs(minNumber);
+  maxNumber = Math.abs(maxNumber);
+
+  if (minNumber > maxNumber) {
+    const swap = minNumber;
+    minNumber = maxNumber;
+    maxNumber = swap;
   }
 
-  return 'Минимальное значение меньше нуля или больше максимального!';
+  const currentNumber = Math.random() * (maxNumber - minNumber) + minNumber;
+  return currentNumber.toFixed(quantity);
 };
 
-getRandomValue(1.2, 1.5, 5);
+getRandomFloat(1.1, 1.5, 5);
