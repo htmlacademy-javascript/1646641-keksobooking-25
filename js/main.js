@@ -1,7 +1,7 @@
 const getRandomPositiveInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
-  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
-  const result = Math.random() * (upper - lower + 1) + lower;
+  const minNum = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
+  const maxNum = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
+  const result = Math.random() * (maxNum - minNum + 1) + minNum;
 
   return Math.floor(result);
 };
@@ -10,11 +10,11 @@ getRandomPositiveInteger(1, 10);
 
 
 const getRandomPositiveFloat = (a, b, digits = 1) => {
-  const lower = Math.min(Math.abs(a), Math.abs(b));
-  const upper = Math.max(Math.abs(a), Math.abs(b));
-  const result = Math.random() * (upper - lower) + lower;
+  const minNum = Math.min(Math.abs(a), Math.abs(b));
+  const maxNum = Math.max(Math.abs(a), Math.abs(b));
+  const result = Math.random() * (maxNum - minNum) + minNum;
 
-  return +result.toFixed(digits);
+  return Number(result.toFixed(digits));
 };
 
 getRandomPositiveFloat(1.2, 5.5, 3);
