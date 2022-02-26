@@ -1,31 +1,20 @@
-const getRandomNumber = (minNumber, maxNumber) => {
-  minNumber = Math.abs(minNumber);
-  maxNumber = Math.abs(maxNumber);
+const getRandomPositiveInteger = (a, b) => {
+  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
+  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
+  const result = Math.random() * (upper - lower + 1) + lower;
 
-  if (minNumber > maxNumber) {
-    const swap = minNumber;
-    minNumber = maxNumber;
-    maxNumber = swap;
-  }
-
-  return Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
+  return Math.floor(result);
 };
 
-getRandomNumber(1, 10);
+getRandomPositiveInteger(1, 10);
 
 
-const getRandomFloat = (minNumber, maxNumber, quantity) => {
-  minNumber = Math.abs(minNumber);
-  maxNumber = Math.abs(maxNumber);
+const getRandomPositiveFloat = (a, b, digits = 1) => {
+  const lower = Math.min(Math.abs(a), Math.abs(b));
+  const upper = Math.max(Math.abs(a), Math.abs(b));
+  const result = Math.random() * (upper - lower) + lower;
 
-  if (minNumber > maxNumber) {
-    const swap = minNumber;
-    minNumber = maxNumber;
-    maxNumber = swap;
-  }
-
-  const currentNumber = Math.random() * (maxNumber - minNumber) + minNumber;
-  return currentNumber.toFixed(quantity);
+  return +result.toFixed(digits);
 };
 
-getRandomFloat(1.1, 1.5, 5);
+getRandomPositiveFloat(1.2, 5.5, 3);
