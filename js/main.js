@@ -86,7 +86,18 @@ const getRandomPositiveFloat = (a, b, digits = 1) => {
 
 const getRandomElementOfArray = (array) => array[getRandomPositiveInteger(0, array.length - 1)];
 
-const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
+const shuffleArray = (array) => {
+  const copiedArray = array.slice();
+
+  for (let i = copiedArray.length - 1; i > 0; i--) {
+    const randomIndex = Math.floor(Math.random() * (i + 1));
+    const temp = copiedArray[i];
+    copiedArray[i] = copiedArray[randomIndex];
+    copiedArray[randomIndex] = temp;
+  }
+
+  return copiedArray;
+};
 
 const getRandomLengthArray = (array) => {
   const randomElementIndex = getRandomPositiveInteger(1, array.length - 1);
