@@ -1,16 +1,3 @@
-const avatars = [
-  'img/avatars/user01.png',
-  'img/avatars/user02.png',
-  'img/avatars/user03.png',
-  'img/avatars/user04.png',
-  'img/avatars/user05.png',
-  'img/avatars/user06.png',
-  'img/avatars/user07.png',
-  'img/avatars/user08.png',
-  'img/avatars/user09.png',
-  'img/avatars/user10.png'
-];
-
 const titles = [
   'Хижина в лесу',
   'Райское местечко',
@@ -27,13 +14,7 @@ const types = [
   'hotel'
 ];
 
-const checkinTimes = [
-  '12:00',
-  '13:00',
-  '14:00'
-];
-
-const checkoutTimes = [
+const checkInOutTimes = [
   '12:00',
   '13:00',
   '14:00'
@@ -87,7 +68,6 @@ const Location = {
 
 const SIMILAR_AD_COUNT = 10;
 
-
 const getRandomPositiveInteger = (a, b) => {
   const minNum = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const maxNum = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
@@ -104,39 +84,38 @@ const getRandomPositiveFloat = (a, b, digits = 1) => {
   return Number(result.toFixed(digits));
 };
 
-const getRandomArrayElement = (array) => array[getRandomPositiveInteger(0, array.length - 1)];
+const getRandomElementOfArray = (array) => array[getRandomPositiveInteger(0, array.length - 1)];
 
-const removeRandomArrayElement = (array) => {
-  const randomElementIndex = getRandomPositiveInteger(0, array.length - 1);
-  const removedRandomElement = array.splice(randomElementIndex, 1);
-  return removedRandomElement.join();
-};
+const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
 
 const getRandomLengthArray = (array) => {
   const randomElementIndex = getRandomPositiveInteger(1, array.length - 1);
-  return array.slice(0, randomElementIndex);
+  const shuffledArray = shuffleArray(array);
+  return shuffledArray.slice(0, randomElementIndex);
 };
 
-const CreateSimilarAd = () => {
+const createAd = (element, index) => {
   const randomLat = getRandomPositiveFloat(Location.LAT_MIN, Location.LAT_MAX, Location.DIGITS);
   const randomLng = getRandomPositiveFloat(Location.LNG_MIN, Location.LNG_MAX, Location.DIGITS);
 
+  index = index < 9 ? `0${++index}` : ++index;
+
   return {
     author: {
-      avatar: removeRandomArrayElement(avatars),
+      avatar: `img/avatars/user${index}.png`,
     },
 
     offer: {
-      title: getRandomArrayElement(titles),
-      address:  `${randomLat}, ${randomLng}`,
+      title: getRandomElementOfArray(titles),
+      address: `${randomLat}, ${randomLng}`,
       price: getRandomPositiveInteger(Price.MIN_PRICE, Price.MAX_PRICE),
-      type: getRandomArrayElement(types),
+      type: getRandomElementOfArray(types),
       rooms: getRandomPositiveInteger(Rooms.MIN_NUM, Rooms.MAX_NUM),
       guests: getRandomPositiveInteger(Guests.MIN_NUM, Guests.MAX_NUM),
-      checkin: getRandomArrayElement(checkinTimes),
-      checkout: getRandomArrayElement(checkoutTimes),
+      checkin: getRandomElementOfArray(checkInOutTimes),
+      checkout: getRandomElementOfArray(checkInOutTimes),
       features: getRandomLengthArray(features),
-      description: getRandomArrayElement(descriptions),
+      description: getRandomElementOfArray(descriptions),
       photos: getRandomLengthArray(photos),
     },
 
@@ -147,4 +126,4 @@ const CreateSimilarAd = () => {
   };
 };
 
-Array.from({length: SIMILAR_AD_COUNT}, CreateSimilarAd);
+Array.from({length: SIMILAR_AD_COUNT}, createAd);
