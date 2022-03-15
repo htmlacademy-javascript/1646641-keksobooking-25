@@ -1,3 +1,1 @@
-import {createArrayOfAds} from './data.js';
-
-createArrayOfAds();
+import './ad-card.js';
