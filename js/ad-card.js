@@ -27,30 +27,51 @@ similarAds.forEach(({offer, author}) => {
   const adCardFeaturesContainer = adCardCopy.querySelector('.popup__features');
   const adCardFeaturesList = adCardFeaturesContainer.querySelectorAll('.popup__feature');
 
-  adCardFeaturesList.forEach((featureItem) => {
-    const isNecessary = offer.features.some((feature) =>
-      featureItem.classList.contains(`popup__feature--${feature}`));
+  const addFeaturesList = () => {
+    adCardFeaturesList.forEach((featureItem) => {
+      const isNecessary = offer.features.some((feature) =>
+        featureItem.classList.contains(`popup__feature--${feature}`));
 
-    if (!isNecessary) {
-      featureItem.remove();
-    }
-  });
+      if (!isNecessary) {
+        featureItem.remove();
+      }
+    });
+  };
 
-  const adCardTime = adCardCopy.querySelector('.popup__text--time');
-  adCardTime.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
-
-  const adCardDesc = adCardCopy.querySelector('.popup__description');
-  adCardDesc.textContent = offer.description;
+  if (offer.features.length === 0) {
+    adCardFeaturesContainer.remove();
+  } else {
+    addFeaturesList();
+  }
 
   const adCardPhotos = adCardCopy.querySelector('.popup__photos');
   const adCardPhoto = adCardPhotos.querySelector('.popup__photo');
   adCardPhotos.textContent = '';
 
-  offer.photos.forEach((photo) => {
-    const adCardPhotoCopy = adCardPhoto.cloneNode();
-    adCardPhotoCopy.src = photo;
-    adCardPhotos.append(adCardPhotoCopy);
-  });
+  const addPhotosList = () => {
+    offer.photos.forEach((photo) => {
+      const adCardPhotoCopy = adCardPhoto.cloneNode();
+      adCardPhotoCopy.src = photo;
+      adCardPhotos.append(adCardPhotoCopy);
+    });
+  };
+
+  if (offer.photos.length === 0) {
+    adCardPhotos.remove();
+  } else {
+    addPhotosList();
+  }
+
+  const adCardTime = adCardCopy.querySelector('.popup__text--time');
+  adCardTime.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
+
+  const adCardDesc = adCardCopy.querySelector('.popup__description');
+
+  if (!offer.description) {
+    adCardDesc.remove();
+  } else {
+    adCardDesc.textContent = offer.description;
+  }
 
   const adCardAvatar = adCardCopy.querySelector('.popup__avatar');
   adCardAvatar.src = author.avatar;
