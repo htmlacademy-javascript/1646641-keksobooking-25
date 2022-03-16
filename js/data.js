@@ -51,6 +51,14 @@ const photos = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
+const typesOfHousing = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Дворец',
+  hotel: 'Отель'
+};
+
 const Price = {
   MIN_PRICE: 0,
   MAX_PRICE: 100000,
@@ -91,7 +99,7 @@ const createAd = (element, index) => {
       title: getRandomElementOfArray(titles),
       address: `${randomLat}, ${randomLng}`,
       price: getRandomPositiveInteger(Price.MIN_PRICE, Price.MAX_PRICE),
-      type: getRandomElementOfArray(types),
+      type: typesOfHousing[getRandomElementOfArray(types)],
       rooms: getRandomPositiveInteger(Rooms.MIN_NUM, Rooms.MAX_NUM),
       guests: getRandomPositiveInteger(Guests.MIN_NUM, Guests.MAX_NUM),
       checkin: getRandomElementOfArray(checkInOutTimes),
@@ -110,4 +118,4 @@ const createAd = (element, index) => {
 
 const createArrayOfAds = () => Array.from({length: SIMILAR_AD_COUNT}, createAd);
 
-export{createArrayOfAds};
+export {createArrayOfAds};

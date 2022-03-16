@@ -30,10 +30,11 @@ const shuffleArray = (array) => {
 };
 
 const getRandomLengthArray = (array) => {
-  const randomElementIndex = getRandomPositiveInteger(1, array.length - 1);
+  const randomElementIndex = getRandomPositiveInteger(0, array.length - 1);
   const shuffledArray = shuffleArray(array);
-  return shuffledArray.slice(0, randomElementIndex);
+  return shuffledArray.slice(randomElementIndex);
 };
+
 
 export {
   getRandomPositiveInteger,
