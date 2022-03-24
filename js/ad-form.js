@@ -76,10 +76,7 @@ const getErrorRoomsMessage = () =>
   ${numberOfRooms.value === '1' ? 'гостя' : 'гостей'}`;
 
 numberOfRooms.addEventListener('change', () => pristine.validate(guestList));
-
-guestList.addEventListener('change', () => {
-  pristine.validate(numberOfRooms);
-});
+guestList.addEventListener('change', () => pristine.validate(numberOfRooms));
 
 pristine.addValidator(numberOfRooms, validateCapacity, getErrorRoomsMessage);
 pristine.addValidator(guestList, validateCapacity);
