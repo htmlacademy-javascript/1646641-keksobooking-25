@@ -1,7 +1,8 @@
-const mapFiltersForm = document.querySelector('.map__filters');
+import {adForm} from './ad-form.js';
+import {mapFiltersForm} from './map-filters.js';
+
 const mapFiltersList = mapFiltersForm.querySelectorAll('.map__filter');
 const mapFeaturesContainer = mapFiltersForm.querySelector('.map__features');
-const adForm = document.querySelector('.ad-form');
 const adFormElementsList = adForm.querySelectorAll('.ad-form__element');
 
 const setDisabledAttribute = (list) => {
