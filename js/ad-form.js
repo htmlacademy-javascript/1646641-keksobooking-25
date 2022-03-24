@@ -81,19 +81,21 @@ guestList.addEventListener('change', () => pristine.validate(numberOfRooms));
 pristine.addValidator(numberOfRooms, validateCapacity, getErrorRoomsMessage);
 pristine.addValidator(guestList, validateCapacity);
 
-const timeIn = adForm.querySelector('#timein');
-const timeOut = adForm.querySelector('#timeout');
+const adFormTimes = adForm.querySelector('.ad-form__element--time');
+const timeIn = adFormTimes.querySelector('#timein');
+const timeOut = adFormTimes.querySelector('#timeout');
 
-const onTimeInChange = () => {
-  timeOut.selectedIndex = timeIn.selectedIndex;
+const onTimeChange = (evt) => {
+  if (evt.target.matches('#timein')) {
+    timeOut.selectedIndex = timeIn.selectedIndex;
+  }
+
+  if (evt.target.matches('#timeout')) {
+    timeIn.selectedIndex = timeOut.selectedIndex;
+  }
 };
 
-const onTimeOutChange = () => {
-  timeIn.selectedIndex = timeOut.selectedIndex;
-};
-
-timeIn.addEventListener('change', onTimeInChange);
-timeOut.addEventListener('change', onTimeOutChange);
+adFormTimes.addEventListener('change', onTimeChange);
 
 adForm.addEventListener('submit' , (evt) => {
   const isValid = pristine.validate();
