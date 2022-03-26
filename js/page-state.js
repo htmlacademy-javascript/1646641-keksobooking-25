@@ -23,8 +23,7 @@ const addDisabledStateOfPage = () => {
 
   mapFeaturesContainer.setAttribute('disabled', 'disabled');
 
-  setDisabledAttribute(mapFiltersList);
-  setDisabledAttribute(adFormElementsList);
+  setDisabledAttribute([...mapFiltersList, ...adFormElementsList]);
 };
 
 const removeDisabledStateOfPage = () => {
@@ -33,8 +32,7 @@ const removeDisabledStateOfPage = () => {
 
   mapFeaturesContainer.removeAttribute('disabled');
 
-  removeDisabledAttribute(mapFiltersList);
-  removeDisabledAttribute(adFormElementsList);
+  removeDisabledAttribute([...mapFiltersList, ...adFormElementsList]);
 };
 
 addDisabledStateOfPage();
