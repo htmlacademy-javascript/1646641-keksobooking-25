@@ -35,11 +35,14 @@ const getRandomLengthArray = (array) => {
   return shuffledArray.slice(randomElementIndex);
 };
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
 
 export {
   getRandomPositiveInteger,
   getRandomPositiveFloat,
   getRandomElementOfArray,
-  getRandomLengthArray
+  getRandomLengthArray,
+  isEscapeKey
 };
 
