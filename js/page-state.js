@@ -4,10 +4,11 @@ import {mapFiltersForm} from './map-filters.js';
 const mapFiltersList = mapFiltersForm.querySelectorAll('.map__filter');
 const mapFeaturesContainer = mapFiltersForm.querySelector('.map__features');
 const adFormElementsList = adForm.querySelectorAll('.ad-form__element');
+const priceSlider = document.querySelector('.ad-form__slider');
 
 const setDisabledAttribute = (list) => {
   list.forEach((element) => {
-    element.setAttribute('disabled', 'disabled');
+    element.setAttribute('disabled', true);
   });
 };
 
@@ -21,7 +22,8 @@ const addDisabledStateOfPage = () => {
   mapFiltersForm.classList.add('map__filters--disabled');
   adForm.classList.add('ad-form--disabled');
 
-  mapFeaturesContainer.setAttribute('disabled', 'disabled');
+  mapFeaturesContainer.setAttribute('disabled', true);
+  priceSlider.setAttribute('disabled', true);
 
   setDisabledAttribute([...mapFiltersList, ...adFormElementsList]);
 };
@@ -31,9 +33,11 @@ const removeDisabledStateOfPage = () => {
   adForm.classList.remove('ad-form--disabled');
 
   mapFeaturesContainer.removeAttribute('disabled');
+  priceSlider.removeAttribute('disabled');
 
   removeDisabledAttribute([...mapFiltersList, ...adFormElementsList]);
 };
 
 addDisabledStateOfPage();
-removeDisabledStateOfPage();
+
+export {removeDisabledStateOfPage};

@@ -34,7 +34,7 @@ const minPrices = {
 const validatePrice = (value) => {
   const typesOfHousing = adForm.querySelector('#type');
 
-  return value <= 100000 && value > minPrices[typesOfHousing.value] || value === minPrices[typesOfHousing.value];
+  return value <= 100000 && value >= minPrices[typesOfHousing.value] && value !== '';
 };
 
 const getPriceErrorMessage = (value) => {
@@ -108,4 +108,4 @@ adForm.addEventListener('submit' , (evt) => {
   }
 });
 
-export {adForm};
+export {adForm, pristine};
