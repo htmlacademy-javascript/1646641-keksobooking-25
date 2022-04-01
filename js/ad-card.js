@@ -1,35 +1,44 @@
-import {createArrayOfAds} from './data.js';
+const renderAdCard = (offer, author) => {
+  const {
+    title,
+    address,
+    price,
+    type,
+    rooms,
+    guests,
+    features,
+    photos,
+    checkin,
+    checkout,
+    description
+  } = offer;
 
-const mapCanvas = document.querySelector('.map__canvas');
-const adCardTemplate = document.querySelector('#card').content.querySelector('.popup');
+  const {avatar} = author;
 
-const similarAds = createArrayOfAds();
-const adCardsFragment = document.createDocumentFragment();
+  const adCardTemplate = document.querySelector('#card').content.querySelector('.popup');
+  const adCard = adCardTemplate.cloneNode(true);
 
-similarAds.forEach(({offer, author}) => {
-  const adCardCopy = adCardTemplate.cloneNode(true);
+  const adCardTitle = adCard.querySelector('.popup__title');
+  adCardTitle.textContent = title;
 
-  const adCardTitle = adCardCopy.querySelector('.popup__title');
-  adCardTitle.textContent = offer.title;
+  const adCardAddress = adCard.querySelector('.popup__text--address');
+  adCardAddress.textContent = address;
 
-  const adCardAddress = adCardCopy.querySelector('.popup__text--address');
-  adCardAddress.textContent = offer.address;
+  const adCardPrice = adCard.querySelector('.popup__text--price');
+  adCardPrice.textContent = `${price} ₽/ночь`;
 
-  const adCardPrice = adCardCopy.querySelector('.popup__text--price');
-  adCardPrice.textContent = `${offer.price} ₽/ночь`;
+  const adCardType = adCard.querySelector('.popup__type');
+  adCardType.textContent = type;
 
-  const adCardType = adCardCopy.querySelector('.popup__type');
-  adCardType.textContent = offer.type;
+  const adCardCapacity = adCard.querySelector('.popup__text--capacity');
+  adCardCapacity.textContent = `${rooms} комнаты для ${guests} гостей`;
 
-  const adCardCapacity = adCardCopy.querySelector('.popup__text--capacity');
-  adCardCapacity.textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
-
-  const adCardFeaturesContainer = adCardCopy.querySelector('.popup__features');
+  const adCardFeaturesContainer = adCard.querySelector('.popup__features');
   const adCardFeaturesList = adCardFeaturesContainer.querySelectorAll('.popup__feature');
 
   const addFeaturesList = () => {
     adCardFeaturesList.forEach((featureItem) => {
-      const isNecessary = offer.features.some((feature) =>
+      const isNecessary = features.some((feature) =>
         featureItem.classList.contains(`popup__feature--${feature}`));
 
       if (!isNecessary) {
@@ -38,45 +47,45 @@ similarAds.forEach(({offer, author}) => {
     });
   };
 
-  if (offer.features.length === 0) {
+  if (features.length === 0) {
     adCardFeaturesContainer.remove();
   } else {
     addFeaturesList();
   }
 
-  const adCardPhotos = adCardCopy.querySelector('.popup__photos');
+  const adCardPhotos = adCard.querySelector('.popup__photos');
   const adCardPhoto = adCardPhotos.querySelector('.popup__photo');
   adCardPhotos.textContent = '';
 
   const addPhotosList = () => {
-    offer.photos.forEach((photo) => {
+    photos.forEach((photo) => {
       const adCardPhotoCopy = adCardPhoto.cloneNode();
       adCardPhotoCopy.src = photo;
       adCardPhotos.append(adCardPhotoCopy);
     });
   };
 
-  if (offer.photos.length === 0) {
+  if (photos.length === 0) {
     adCardPhotos.remove();
   } else {
     addPhotosList();
   }
 
-  const adCardTime = adCardCopy.querySelector('.popup__text--time');
-  adCardTime.textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
+  const adCardTime = adCard.querySelector('.popup__text--time');
+  adCardTime.textContent = `Заезд после ${checkin}, выезд до ${checkout}`;
 
-  const adCardDesc = adCardCopy.querySelector('.popup__description');
+  const adCardDesc = adCard.querySelector('.popup__description');
 
-  if (!offer.description) {
+  if (!description) {
     adCardDesc.remove();
   } else {
-    adCardDesc.textContent = offer.description;
+    adCardDesc.textContent = description;
   }
 
-  const adCardAvatar = adCardCopy.querySelector('.popup__avatar');
-  adCardAvatar.src = author.avatar;
+  const adCardAvatar = adCard.querySelector('.popup__avatar');
+  adCardAvatar.src = avatar;
 
-  adCardsFragment.append(adCardCopy);
-});
+  return adCard;
+};
 
-mapCanvas.append(adCardsFragment.firstElementChild);
+export {renderAdCard};
