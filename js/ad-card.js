@@ -47,7 +47,7 @@ const renderAdCard = (offer, author) => {
     });
   };
 
-  if (features.length === 0) {
+  if (!features) {
     adCardFeaturesContainer.remove();
   } else {
     addFeaturesList();
@@ -65,7 +65,7 @@ const renderAdCard = (offer, author) => {
     });
   };
 
-  if (photos.length === 0) {
+  if (!photos) {
     adCardPhotos.remove();
   } else {
     addPhotosList();

@@ -1,9 +1,12 @@
 import {removeDisabledStateOfPage} from './page-state.js';
-import {createArrayOfAds} from './data.js';
+import {getData} from './api.js';
 import {renderAdCard} from './ad-card.js';
 
 const map = L.map('map-canvas')
-  .on('load', removeDisabledStateOfPage)
+  .on('load', () => {
+    removeDisabledStateOfPage();
+    getData();
+  })
   .setView({
     lat: 35.67436,
     lng: 139.72798,
@@ -45,6 +48,34 @@ mainMarker.on('moveend', (evt) => {
 
 const adFormReset = document.querySelector('.ad-form__reset');
 
+const adMarkerIcon = L.icon(
+  {
+    iconUrl: './img/pin.svg',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  }
+);
+
+const createAdMarkers = (ads) => {
+  ads.forEach(({location, offer, author}) => {
+    const {lat, lng} = location;
+
+    const adMarker = L.marker(
+      {
+        lat,
+        lng
+      },
+      {
+        icon: adMarkerIcon
+      }
+    );
+
+    adMarker
+      .addTo(map)
+      .bindPopup(renderAdCard(offer, author));
+  });
+};
+
 const onResetButtonClick = () => {
   mainMarker.setLatLng(
     {
@@ -57,38 +88,19 @@ const onResetButtonClick = () => {
     lat: 35.67436,
     lng: 139.72798,
   }, 12);
+
+  map.closePopup();
+
+  const adForm = document.querySelector('.ad-form');
+  adForm.reset();
+
+  const priceSlider = document.querySelector('.ad-form__slider');
+  priceSlider.noUiSlider.reset();
+
+  const mapFiltersForm = document.querySelector('.map__filters');
+  mapFiltersForm.reset();
 };
 
 adFormReset.addEventListener('click', onResetButtonClick);
 
-const similarAds = createArrayOfAds();
-
-const adMarkerIcon = L.icon(
-  {
-    iconUrl: './img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  }
-);
-
-const createAdMarker = (location, ...rest) => {
-  const {lat, lng} = location;
-
-  const adMarker = L.marker(
-    {
-      lat,
-      lng
-    },
-    {
-      icon: adMarkerIcon
-    }
-  );
-
-  adMarker
-    .addTo(map)
-    .bindPopup(renderAdCard(...rest));
-};
-
-similarAds.forEach(({location, offer, author}) => {
-  createAdMarker(location, offer, author);
-});
+export {createAdMarkers, onResetButtonClick};
