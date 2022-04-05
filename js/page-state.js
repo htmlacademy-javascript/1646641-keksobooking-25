@@ -1,6 +1,5 @@
-import {adForm} from './ad-form.js';
-import {mapFiltersForm} from './map-filters.js';
-
+const mapFiltersForm = document.querySelector('.map__filters');
+const adForm = document.querySelector('.ad-form');
 const mapFiltersList = mapFiltersForm.querySelectorAll('.map__filter');
 const mapFeaturesContainer = mapFiltersForm.querySelector('.map__features');
 const adFormElementsList = adForm.querySelectorAll('.ad-form__element');
@@ -29,7 +28,6 @@ const addDisabledStateOfPage = () => {
 };
 
 const removeDisabledStateOfPage = () => {
-  mapFiltersForm.classList.remove('map__filters--disabled');
   adForm.classList.remove('ad-form--disabled');
 
   mapFeaturesContainer.removeAttribute('disabled');

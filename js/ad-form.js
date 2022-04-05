@@ -1,8 +1,9 @@
 import {
   addModal,
-  successModal,
   errorModal
 } from './ad-form-modal.js';
+
+import {sendData} from './api.js';
 
 const adForm = document.querySelector('.ad-form');
 
@@ -97,15 +98,30 @@ const onTimeChange = (evt) => {
 
 adFormTimes.addEventListener('change', onTimeChange);
 
+const submitButton = adForm.querySelector('.ad-form__submit');
+
+const blockSubmitButton = () => {
+  submitButton.setAttribute('disabled', true);
+};
+
+const unblockSubmitButton = () => {
+  submitButton.removeAttribute('disabled');
+};
+
 adForm.addEventListener('submit' , (evt) => {
+  evt.preventDefault();
+
   const isValid = pristine.validate();
 
   if (isValid) {
-    addModal(successModal);
+    blockSubmitButton();
+    sendData(
+      new FormData(evt.target),
+      unblockSubmitButton
+    );
   } else {
-    evt.preventDefault();
     addModal(errorModal);
   }
 });
 
-export {adForm, pristine};
+export {pristine};
