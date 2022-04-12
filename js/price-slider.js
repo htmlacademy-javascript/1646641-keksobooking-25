@@ -1,16 +1,22 @@
 import {pristine} from './ad-form.js';
 
+const Price = {
+  MIN: 0,
+  MAX: 100000,
+  DEFAULT: 5000,
+};
+
 const priceSlider = document.querySelector('.ad-form__slider');
 const priceField = document.querySelector('#price');
 
-priceField.value = 5000;
+priceField.value = Price.DEFAULT;
 
 noUiSlider.create(priceSlider, {
   range: {
-    min: 0,
-    max: 100000
+    min: Price.MIN,
+    max: Price.MAX,
   },
-  start: 5000,
+  start: Price.DEFAULT,
   step: 1,
   connect: 'lower',
   format: {
