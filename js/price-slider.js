@@ -1,17 +1,24 @@
 import {pristine} from './ad-form.js';
+import {debounce} from './util.js';
+
+const RERENDER_DELAY = 300;
+
+const Price = {
+  MIN: 0,
+  MAX: 100000,
+};
 
 const priceSlider = document.querySelector('.ad-form__slider');
 const priceField = document.querySelector('#price');
-
-priceField.value = 5000;
+const typesOfHousingList = document.querySelector('#type');
 
 noUiSlider.create(priceSlider, {
   range: {
-    min: 0,
-    max: 100000
+    min: Price.MIN,
+    max: Price.MAX,
   },
-  start: 5000,
-  step: 1,
+  start: priceField.value,
+  step: 1000,
   connect: 'lower',
   format: {
     to: function (value) {
@@ -23,7 +30,14 @@ noUiSlider.create(priceSlider, {
   }
 });
 
-priceSlider.noUiSlider.on('update', () => {
+priceSlider.noUiSlider.on('slide', () => {
   priceField.value = priceSlider.noUiSlider.get();
   pristine.validate(priceField);
 });
+
+const onPriceChange = () => {
+  priceSlider.noUiSlider.set(priceField.value);
+};
+
+typesOfHousingList.addEventListener('change', onPriceChange);
+priceField.addEventListener('input', debounce(onPriceChange, RERENDER_DELAY));

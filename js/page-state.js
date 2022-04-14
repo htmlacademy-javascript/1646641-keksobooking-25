@@ -7,13 +7,13 @@ const priceSlider = document.querySelector('.ad-form__slider');
 
 const setDisabledAttribute = (list) => {
   list.forEach((element) => {
-    element.setAttribute('disabled', true);
+    element.disabled = true;
   });
 };
 
 const removeDisabledAttribute = (list) => {
   list.forEach((element) => {
-    element.removeAttribute('disabled');
+    element.disabled = false;
   });
 };
 
@@ -21,8 +21,8 @@ const addDisabledStateOfPage = () => {
   mapFiltersForm.classList.add('map__filters--disabled');
   adForm.classList.add('ad-form--disabled');
 
-  mapFeaturesContainer.setAttribute('disabled', true);
-  priceSlider.setAttribute('disabled', true);
+  mapFeaturesContainer.disabled = true;
+  priceSlider.disabled = true;
 
   setDisabledAttribute([...mapFiltersList, ...adFormElementsList]);
 };
@@ -30,8 +30,8 @@ const addDisabledStateOfPage = () => {
 const removeDisabledStateOfPage = () => {
   adForm.classList.remove('ad-form--disabled');
 
-  mapFeaturesContainer.removeAttribute('disabled');
-  priceSlider.removeAttribute('disabled');
+  mapFeaturesContainer.disabled = false;
+  priceSlider.disabled = false;
 
   removeDisabledAttribute([...mapFiltersList, ...adFormElementsList]);
 };

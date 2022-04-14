@@ -1,19 +1,19 @@
 import {createAdMarkers} from './map.js';
-import {onResetButtonClick} from './map.js';
 import {showAlert} from './util.js';
+import {setMapFilters} from './map-filters.js';
+import {onResetButtonClick} from './reset.js';
 import {
   addModal,
   errorModal,
   successModal
 } from './ad-form-modal.js';
 
-const SIMILAR_AD_COUNT = 10;
-
 function getData () {
   fetch('https://25.javascript.pages.academy/keksobooking/data')
     .then((response) => response.json())
     .then((ads) => {
-      createAdMarkers(ads.slice(0, SIMILAR_AD_COUNT));
+      createAdMarkers(ads);
+      setMapFilters(ads);
     })
     .then(() => {
       const mapFiltersForm = document.querySelector('.map__filters');

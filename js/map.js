@@ -2,6 +2,8 @@ import {removeDisabledStateOfPage} from './page-state.js';
 import {getData} from './api.js';
 import {renderAdCard} from './ad-card.js';
 
+const SIMILAR_AD_COUNT = 10;
+
 const map = L.map('map-canvas')
   .on('load', () => {
     removeDisabledStateOfPage();
@@ -18,6 +20,8 @@ L.tileLayer(
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
+
+const markerGroup = L.layerGroup().addTo(map);
 
 const mainMarkerIcon = L.icon(
   {
@@ -46,8 +50,6 @@ mainMarker.on('moveend', (evt) => {
   adFormAddress.value = `${currentLatLng.lat.toFixed(5)}, ${currentLatLng.lng.toFixed(5)}`;
 });
 
-const adFormReset = document.querySelector('.ad-form__reset');
-
 const adMarkerIcon = L.icon(
   {
     iconUrl: './img/pin.svg',
@@ -57,50 +59,35 @@ const adMarkerIcon = L.icon(
 );
 
 const createAdMarkers = (ads) => {
-  ads.forEach(({location, offer, author}) => {
-    const {lat, lng} = location;
+  ads
+    .slice(0, SIMILAR_AD_COUNT)
+    .forEach(({location, offer, author}) => {
+      const {lat, lng} = location;
 
-    const adMarker = L.marker(
-      {
-        lat,
-        lng
-      },
-      {
-        icon: adMarkerIcon
-      }
-    );
+      const adMarker = L.marker(
+        {
+          lat,
+          lng,
+        },
+        {
+          icon: adMarkerIcon,
+        }
+      );
 
-    adMarker
-      .addTo(map)
-      .bindPopup(renderAdCard(offer, author));
-  });
+      adMarker
+        .addTo(markerGroup)
+        .bindPopup(renderAdCard(offer, author));
+    });
 };
 
-const onResetButtonClick = () => {
-  mainMarker.setLatLng(
-    {
-      lat: 35.67436,
-      lng: 139.72798,
-    }
-  );
 
-  map.setView({
-    lat: 35.67436,
-    lng: 139.72798,
-  }, 12);
-
-  map.closePopup();
-
-  const adForm = document.querySelector('.ad-form');
-  adForm.reset();
-
-  const priceSlider = document.querySelector('.ad-form__slider');
-  priceSlider.noUiSlider.reset();
-
-  const mapFiltersForm = document.querySelector('.map__filters');
-  mapFiltersForm.reset();
+const removeAdMarkers = () => {
+  markerGroup.clearLayers();
 };
 
-adFormReset.addEventListener('click', onResetButtonClick);
-
-export {createAdMarkers, onResetButtonClick};
+export {
+  createAdMarkers,
+  removeAdMarkers,
+  map,
+  mainMarker
+};
