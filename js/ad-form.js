@@ -1,8 +1,3 @@
-import {
-  addModal,
-  errorModal
-} from './ad-form-modal.js';
-
 import {sendData} from './api.js';
 
 const adForm = document.querySelector('.ad-form');
@@ -50,8 +45,9 @@ const getPriceErrorMessage = (value) => {
 
 const typesOfHousingList = adForm.querySelector('#type');
 
-const onTypeChange = () => {
-  adFormPrice.placeholder = minPrices[typesOfHousingList.value];
+const onTypeChange = ({target}) => {
+  const value = target.value;
+  adFormPrice.placeholder = minPrices[value];
   pristine.validate(adFormPrice);
 };
 
@@ -101,7 +97,7 @@ adFormTimes.addEventListener('change', onTimeChange);
 const submitButton = adForm.querySelector('.ad-form__submit');
 
 const blockSubmitButton = () => {
-  submitButton.setAttribute('disabled', true);
+  submitButton.disabled = true;
 };
 
 const unblockSubmitButton = () => {
@@ -120,7 +116,8 @@ adForm.addEventListener('submit' , (evt) => {
       unblockSubmitButton
     );
   } else {
-    addModal(errorModal);
+    pristine.addError(adForm);
+    blockSubmitButton();
   }
 });
 

@@ -1,5 +1,6 @@
 import {map, mainMarker} from './map.js';
 import {removeChosenPhotos} from './photo.js';
+import {pristine} from './ad-form.js';
 
 const adForm = document.querySelector('.ad-form');
 const priceSlider = document.querySelector('.ad-form__slider');
@@ -24,6 +25,7 @@ const onResetButtonClick = () => {
   removeChosenPhotos();
   priceSlider.noUiSlider.reset();
   mapFiltersForm.reset();
+  pristine.reset();
 };
 
 adFormReset.addEventListener('click', onResetButtonClick);
