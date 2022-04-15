@@ -3,11 +3,12 @@ import {getData} from './api.js';
 import {renderAdCard} from './ad-card.js';
 
 const SIMILAR_AD_COUNT = 10;
+const ADDRESS_TO_GET_DATA = 'https://25.javascript.pages.academy/keksobooking/data';
 
 const map = L.map('map-canvas')
   .on('load', () => {
     removeDisabledStateOfPage();
-    getData();
+    getData(ADDRESS_TO_GET_DATA);
   })
   .setView({
     lat: 35.67436,
@@ -79,7 +80,6 @@ const createAdMarkers = (ads) => {
         .bindPopup(renderAdCard(offer, author));
     });
 };
-
 
 const removeAdMarkers = () => {
   markerGroup.clearLayers();

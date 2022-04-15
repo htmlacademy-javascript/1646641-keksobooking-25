@@ -8,8 +8,10 @@ import {
   successModal
 } from './ad-form-modal.js';
 
-function getData () {
-  fetch('https://25.javascript.pages.academy/keksobooking/data')
+const ADDRESS_TO_SEND_DATA = 'https://25.javascript.pages.academy/keksobooking';
+
+function getData (address) {
+  fetch(address)
     .then((response) => response.json())
     .then((ads) => {
       createAdMarkers(ads);
@@ -26,7 +28,7 @@ function getData () {
 
 function sendData (body, unblockSubmitButton)  {
   fetch(
-    'https://25.javascript.pages.academy/keksobooking',
+    ADDRESS_TO_SEND_DATA,
     {
       method: 'POST',
       body,

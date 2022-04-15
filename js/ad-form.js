@@ -115,9 +115,6 @@ adForm.addEventListener('submit' , (evt) => {
       new FormData(evt.target),
       unblockSubmitButton
     );
-  } else {
-    pristine.addError(adForm);
-    blockSubmitButton();
   }
 });
 

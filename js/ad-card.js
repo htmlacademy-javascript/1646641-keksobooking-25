@@ -1,3 +1,11 @@
+const housingTypes = {
+  'bungalow': 'Бунгало',
+  'flat': 'Квартира',
+  'hotel': 'Отель',
+  'house': 'Дом',
+  'palace': 'Дворец',
+};
+
 const renderAdCard = (offer, author) => {
   const {
     title,
@@ -28,7 +36,7 @@ const renderAdCard = (offer, author) => {
   adCardPrice.textContent = `${price} ₽/ночь`;
 
   const adCardType = adCard.querySelector('.popup__type');
-  adCardType.textContent = type;
+  adCardType.textContent = housingTypes[type];
 
   const adCardCapacity = adCard.querySelector('.popup__text--capacity');
   adCardCapacity.textContent = `${rooms} комнаты для ${guests} гостей`;
